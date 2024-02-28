@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import bcryptjs from "bcryptjs";
 
 export const signup = async (req, res) => {
   try {
@@ -12,6 +13,8 @@ export const signup = async (req, res) => {
     }
 
     //HASH Password here
+    const salt = await bcryptjs.genSalt(10); //The higher it is it will be more secure and at the same time will be slower
+    const hashpassword = await bcryptjs.hash(password, salt);
 
     const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
     const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
@@ -19,7 +22,7 @@ export const signup = async (req, res) => {
     const newUser = new User({
       fullName,
       username,
-      password,
+      password: hashpassword,
       gender,
       profilePic: gender === "male" ? boyProfilePic : girlProfilePic,
     });
