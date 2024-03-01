@@ -56,7 +56,7 @@ export const login = async (req, res) => {
       user.password || " "
     );
     if (!user || !isPasswordCorrect) {
-      res.status(400).json({ error: "User name or password invalid!" });
+      res.status(400).json({ error: "User name or password invalid" });
     }
     generateTokenAndSetCookie(user._id, res);
     res.status(200).json({
@@ -66,11 +66,17 @@ export const login = async (req, res) => {
       profilePic: user.profilePic,
     });
   } catch (error) {
-    console.log("Error in signup controller", error.message);
+    console.log("Error in login controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 export const logout = (req, res) => {
-  console.log("logout");
+  try {
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log("Error in logout controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
