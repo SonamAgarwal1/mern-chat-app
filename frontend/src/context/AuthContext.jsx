@@ -1,6 +1,12 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const AuthContext = createContext();
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const useAuthContext = () => {
+  //This hook to used to be able to consume value of authUser and setAuthUser
+  return useContext(AuthContext);
+};
 
 export const AuthContextProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(
