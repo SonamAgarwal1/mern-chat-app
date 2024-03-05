@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuthContext = () => {
   //This hook to used to be able to consume value of authUser and setAuthUser
+
   return useContext(AuthContext);
 };
 
@@ -12,8 +13,9 @@ export const AuthContextProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(
     JSON.parse(localStorage.getItem("chat-user")) || null
   );
+
   return (
-    <AuthContext.Provider value={(authUser, setAuthUser)}>
+    <AuthContext.Provider value={{ authUser, setAuthUser }}>
       {children}
     </AuthContext.Provider>
   );
