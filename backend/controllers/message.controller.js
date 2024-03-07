@@ -51,7 +51,7 @@ export const getMessages = async (req, res) => {
       participants: { $all: [senderId, userToChatId] },
     }).populate("messages"); // NOT REFERENCE BUT ACTUAL MESSAGE
 
-    if (!conversation) res.status(200).json([]);
+    if (!conversation) return res.status(200).json([]);
     const messages = conversation.messages;
 
     res.status(200).json(messages);
